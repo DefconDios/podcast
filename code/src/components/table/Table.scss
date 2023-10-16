@@ -1,0 +1,19 @@
+.table {
+    width: 1000px !important;
+    height: 400px !important;
+    background-color: unset !important;
+
+    &__row {
+        height: 80px;
+    }
+
+    &__name {
+        border-bottom: 1px solid rgba(224, 224, 224, 0.03) !important; 
+        color: #fff !important;
+    }
+
+    &__cell {
+        border-bottom: 1px solid rgba(224, 224, 224, 0.03) !important; 
+        color: rgba(225, 225, 225, 0.3) !important;
+    }
+}
