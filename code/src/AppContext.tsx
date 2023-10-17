@@ -4,6 +4,7 @@ import { MItunesData, Result } from "./core/models/itunes-data.model";
 interface AppContextType {
   searchResults: MItunesData | null; // Define el tipo de tus resultados
   setResults: (results: MItunesData | null) => void;
+  clearResults: () => void;
   selectedSong: Result | null;
   setSelectedSong: (row: Result | null) => void;
 }
@@ -30,8 +31,20 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     setSearchResults(results);
   };
 
+  const clearResults = () => {
+    setSearchResults(null);
+  };
+
   return (
-    <AppContext.Provider value={{ searchResults, setResults, selectedSong, setSelectedSong }}>
+    <AppContext.Provider
+      value={{
+        searchResults,
+        setResults,
+        clearResults,
+        selectedSong,
+        setSelectedSong,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );
