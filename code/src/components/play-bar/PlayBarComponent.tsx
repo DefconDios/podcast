@@ -1,80 +1,78 @@
-import * as React from "react";
-import "./PlayBar.scss";
-import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Slider from "@mui/material/Slider";
-import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
-import PauseRounded from "@mui/icons-material/PauseRounded";
-import PlayArrowRounded from "@mui/icons-material/PlayArrowRounded";
-import FastForwardRounded from "@mui/icons-material/FastForwardRounded";
-import FastRewindRounded from "@mui/icons-material/FastRewindRounded";
-import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded";
-import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded";
-import { useAppContext } from "../../AppContext";
+import * as React from 'react'
+import './PlayBar.scss'
+import { styled, useTheme } from '@mui/material/styles'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Slider from '@mui/material/Slider'
+import IconButton from '@mui/material/IconButton'
+import Stack from '@mui/material/Stack'
+import PauseRounded from '@mui/icons-material/PauseRounded'
+import PlayArrowRounded from '@mui/icons-material/PlayArrowRounded'
+import FastForwardRounded from '@mui/icons-material/FastForwardRounded'
+import FastRewindRounded from '@mui/icons-material/FastRewindRounded'
+import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded'
+import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded'
+import { useAppContext } from '../../AppContext'
 
-const Widget = styled("div")(({ theme }) => ({
+const Widget = styled('div')(({ theme }) => ({
   padding: 16,
   borderRadius: 16,
   width: 343,
-  maxWidth: "100%",
-  margin: "auto",
-  position: "relative",
+  maxWidth: '100%',
+  margin: 'auto',
+  position: 'relative',
   zIndex: 1,
-  backgroundColor:
-    theme.palette.mode === "dark" ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.4)",
-  backdropFilter: "blur(40px)",
-}));
+  backgroundColor: theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.4)',
+  backdropFilter: 'blur(40px)',
+}))
 
-const CoverImage = styled("div")({
+const CoverImage = styled('div')({
   width: 110,
   height: 110,
-  objectFit: "cover",
-  overflow: "hidden",
+  objectFit: 'cover',
+  overflow: 'hidden',
   flexShrink: 0,
-  backgroundColor: "rgba(0,0,0,0.08)",
-  "& > img": {
-    width: "100%",
+  backgroundColor: 'rgba(0,0,0,0.08)',
+  '& > img': {
+    width: '100%',
   },
-});
+})
 
 const TinyText = styled(Typography)({
-  fontSize: "0.75rem",
+  fontSize: '0.75rem',
   opacity: 0.38,
   fontWeight: 500,
   letterSpacing: 0.2,
-});
+})
 
 const PlayBarComponent = () => {
-  const { selectedSong } = useAppContext();
-  const theme = useTheme();
-  const duration = 200; // seconds
-  const [position, setPosition] = React.useState(32);
-  const [paused, setPaused] = React.useState(false);
+  const { selectedSong } = useAppContext()
+  const theme = useTheme()
+  const duration = 200 // seconds
+  const [position, setPosition] = React.useState(32)
+  const [paused, setPaused] = React.useState(false)
   function formatDuration(value: number) {
-    const minute = Math.floor(value / 60);
-    const secondLeft = value - minute * 60;
-    return `${minute}:${secondLeft < 10 ? `0${secondLeft}` : secondLeft}`;
+    const minute = Math.floor(value / 60)
+    const secondLeft = value - minute * 60
+    return `${minute}:${secondLeft < 10 ? `0${secondLeft}` : secondLeft}`
   }
-  const mainIconColor = theme.palette.mode === "dark" ? "#fff" : "#000";
-  const lightIconColor =
-    theme.palette.mode === "dark" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.4)";
+  const mainIconColor = theme.palette.mode === 'dark' ? '#fff' : '#000'
+  const lightIconColor = theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)'
 
   return (
-    <div className="play-bar">
-      <Box sx={{ width: "100%", overflow: "hidden" }}>
-        <Widget className="play-bar__widget">
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+    <div className='play-bar'>
+      <Box sx={{ width: '100%', overflow: 'hidden' }}>
+        <Widget className='play-bar__widget'>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <CoverImage>
-              <img alt="no song" src={selectedSong?.artworkUrl600} />
+              <img alt='no song' src={selectedSong?.artworkUrl600} />
             </CoverImage>
             <Box sx={{ ml: 1.5, minWidth: 0 }}>
-              <div className="play-bar__box">
-                <Typography noWrap className="play-bar__typography--title">
+              <div className='play-bar__box'>
+                <Typography noWrap className='play-bar__typography--title'>
                   {selectedSong?.trackName}
                 </Typography>
-                <Typography className="play-bar__typography--secondTitle">
+                <Typography className='play-bar__typography--secondTitle'>
                   {selectedSong?.artistName}
                 </Typography>
               </div>
@@ -82,55 +80,52 @@ const PlayBarComponent = () => {
           </Box>
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
               mt: -2,
             }}
           >
             <TinyText>{formatDuration(position)}</TinyText>
           </Box>
           <Slider
-            aria-label="time-indicator"
-            size="small"
+            aria-label='time-indicator'
+            size='small'
             value={position}
             min={0}
             step={1}
             max={duration}
             onChange={(_, value) => setPosition(value as number)}
             sx={{
-              color:
-                theme.palette.mode === "dark" ? "#fff" : "rgba(255,255,255,1)",
+              color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(255,255,255,1)',
               height: 4,
-              "& .MuiSlider-thumb": {
+              '& .MuiSlider-thumb': {
                 width: 8,
                 height: 8,
-                transition: "0.3s cubic-bezier(.47,1.64,.41,.8)",
-                "&:before": {
-                  boxShadow: "0 2px 12px 0 rgba(0,0,0,0.4)",
+                transition: '0.3s cubic-bezier(.47,1.64,.41,.8)',
+                '&:before': {
+                  boxShadow: '0 2px 12px 0 rgba(0,0,0,0.4)',
                 },
-                "&:hover, &.Mui-focusVisible": {
+                '&:hover, &.Mui-focusVisible': {
                   boxShadow: `0px 0px 0px 8px ${
-                    theme.palette.mode === "dark"
-                      ? "rgb(255 255 255 / 16%)"
-                      : "rgb(0 0 0 / 16%)"
+                    theme.palette.mode === 'dark' ? 'rgb(255 255 255 / 16%)' : 'rgb(0 0 0 / 16%)'
                   }`,
                 },
-                "&.Mui-active": {
+                '&.Mui-active': {
                   width: 20,
                   height: 20,
                 },
               },
-              "& .MuiSlider-rail": {
+              '& .MuiSlider-rail': {
                 opacity: 0.28,
               },
             }}
           />
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
               mt: -2,
             }}
           >
@@ -138,64 +133,55 @@ const PlayBarComponent = () => {
           </Box>
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               mt: -1,
             }}
           >
-            <IconButton className="play-bar__button" aria-label="previous song">
-              <FastRewindRounded fontSize="large" htmlColor={mainIconColor} />
+            <IconButton className='play-bar__button' aria-label='previous song'>
+              <FastRewindRounded fontSize='large' htmlColor={mainIconColor} />
             </IconButton>
             <IconButton
-              className="play-bar__button"
-              aria-label={paused ? "play" : "pause"}
+              className='play-bar__button'
+              aria-label={paused ? 'play' : 'pause'}
               onClick={() => setPaused(!paused)}
             >
               {paused ? (
-                <PlayArrowRounded
-                  sx={{ fontSize: "3rem" }}
-                  htmlColor={mainIconColor}
-                />
+                <PlayArrowRounded sx={{ fontSize: '3rem' }} htmlColor={mainIconColor} />
               ) : (
-                <PauseRounded
-                  sx={{ fontSize: "3rem" }}
-                  htmlColor={mainIconColor}
-                />
+                <PauseRounded sx={{ fontSize: '3rem' }} htmlColor={mainIconColor} />
               )}
             </IconButton>
-            <IconButton className="play-bar__button" aria-label="next song">
-              <FastForwardRounded fontSize="large" htmlColor={mainIconColor} />
+            <IconButton className='play-bar__button' aria-label='next song'>
+              <FastForwardRounded fontSize='large' htmlColor={mainIconColor} />
             </IconButton>
           </Box>
           <Stack
-            className="play-bar__volume"
+            className='play-bar__volume'
             spacing={2}
-            direction="row"
+            direction='row'
             sx={{ mb: 1, px: 1 }}
-            alignItems="center"
+            alignItems='center'
           >
             <VolumeDownRounded htmlColor={lightIconColor} />
             <Slider
-              aria-label="Volume"
+              aria-label='Volume'
               defaultValue={30}
               sx={{
-                color:
-                  theme.palette.mode === "dark"
-                    ? "#fff"
-                    : "rgba(255,255,255,1)",
-                "& .MuiSlider-track": {
-                  border: "none",
+                color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(255,255,255,1)',
+                '& .MuiSlider-track': {
+                  border: 'none',
                 },
-                "& .MuiSlider-thumb": {
+                '& .MuiSlider-thumb': {
                   width: 24,
                   height: 24,
-                  backgroundColor: "#fff",
-                  "&:before": {
-                    boxShadow: "0 4px 8px rgba(0,0,0,0.4)",
+                  backgroundColor: '#fff',
+                  '&:before': {
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.4)',
                   },
-                  "&:hover, &.Mui-focusVisible, &.Mui-active": {
-                    boxShadow: "none",
+                  '&:hover, &.Mui-focusVisible, &.Mui-active': {
+                    boxShadow: 'none',
                   },
                 },
               }}
@@ -205,7 +191,7 @@ const PlayBarComponent = () => {
         </Widget>
       </Box>
     </div>
-  );
-};
+  )
+}
 
-export default PlayBarComponent;
+export default PlayBarComponent
