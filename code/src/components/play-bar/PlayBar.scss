@@ -10,23 +10,46 @@
     width: unset !important;
     border-radius: unset !important;
     height: 110px;
-    background-color: #1A1A1A !important;
-    color: #FFFFFF;
+    background-color: #1a1a1a !important;
+    color: #ffffff;
     padding: unset !important;
     gap: 16px;
   }
 
+  &__box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   &__volume {
     width: 500px;
-    
+
     svg {
-        color: #FFFFFF;
+      color: #ffffff;
     }
   }
 
   &__button {
     svg {
-        color: #FFFFFF;
+      color: #ffffff;
+    }
+  }
+
+  &__typography {
+    font-family: unset !important;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    white-space: nowrap;
+
+    &--title {
+      @extend .play-bar__typography;
+      color: #ffffff;
+    }
+    &--secondTitle {
+      @extend .play-bar__typography;
+      color: rgba($color: #ffffff, $alpha: 0.3);
     }
   }
 }
