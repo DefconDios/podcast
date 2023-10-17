@@ -6,26 +6,38 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 
 const SearchBarComponent = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const { setResults } = useAppContext();
+  const { setResults, clearResults, searchResults } = useAppContext();
+  const [previousSearchTerm, setPreviousSearchTerm] = useState<string>("");
 
   useEffect(() => {
-    const fetchData = async () => {
-      const results = await getPodcast(searchTerm);
-      if (results) {
-        setResults(results);
+    const timer = setTimeout(() => {
+      if (searchTerm.length >= 3 && searchTerm !== previousSearchTerm) {
+        clearResults();
+        fetchData();
       }
-    };
+    }, 3000);
 
-    if (searchTerm.length >= 3) {
-      fetchData();
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchTerm, previousSearchTerm]);
+
+  const fetchData = async () => {
+    const results = await getPodcast(searchTerm);
+    if (results) {
+      setResults(results);
     }
-  }, [searchTerm]);
+
+    setPreviousSearchTerm(searchTerm);
+  };
 
   return (
     <div className="search">
-      <button className="search__button">
-        <ArrowBackIosRoundedIcon />
-      </button>
+      {searchResults && (
+        <button className="search__button">
+          <ArrowBackIosRoundedIcon />
+        </button>
+      )}
       <input
         type="search"
         placeholder="podcast"
