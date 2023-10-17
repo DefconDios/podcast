@@ -12,6 +12,7 @@ import FastForwardRounded from "@mui/icons-material/FastForwardRounded";
 import FastRewindRounded from "@mui/icons-material/FastRewindRounded";
 import VolumeUpRounded from "@mui/icons-material/VolumeUpRounded";
 import VolumeDownRounded from "@mui/icons-material/VolumeDownRounded";
+import { useAppContext } from "../../AppContext";
 
 const Widget = styled("div")(({ theme }) => ({
   padding: 16,
@@ -46,6 +47,7 @@ const TinyText = styled(Typography)({
 });
 
 const PlayBarComponent = () => {
+  const { selectedSong } = useAppContext();
   const theme = useTheme();
   const duration = 200; // seconds
   const [position, setPosition] = React.useState(32);
@@ -65,25 +67,17 @@ const PlayBarComponent = () => {
         <Widget className="play-bar__widget">
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <CoverImage>
-              <img
-                alt="can't win - Chilling Sunday"
-                src="/static/images/sliders/chilling-sunday.jpg"
-              />
+              <img alt="no song" src={selectedSong?.artworkUrl600} />
             </CoverImage>
             <Box sx={{ ml: 1.5, minWidth: 0 }}>
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                fontWeight={500}
-              >
-                Jun Pulse
-              </Typography>
-              <Typography noWrap>
-                <b>คนเก่าเขาทำไว้ดี (Can&apos;t win)</b>
-              </Typography>
-              <Typography noWrap letterSpacing={-0.25}>
-                Chilling Sunday &mdash; คนเก่าเขาทำไว้ดี
-              </Typography>
+              <div className="play-bar__box">
+                <Typography noWrap className="play-bar__typography--title">
+                  {selectedSong?.trackName}
+                </Typography>
+                <Typography className="play-bar__typography--secondTitle">
+                  {selectedSong?.artistName}
+                </Typography>
+              </div>
             </Box>
           </Box>
           <Box
@@ -187,7 +181,9 @@ const PlayBarComponent = () => {
               defaultValue={30}
               sx={{
                 color:
-                  theme.palette.mode === "dark" ? "#fff" : "rgba(255,255,255,1)",
+                  theme.palette.mode === "dark"
+                    ? "#fff"
+                    : "rgba(255,255,255,1)",
                 "& .MuiSlider-track": {
                   border: "none",
                 },
