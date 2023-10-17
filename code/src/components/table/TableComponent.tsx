@@ -35,72 +35,69 @@ const TableComponent = () => {
   };
 
   return (
-    <div>
-      <ThumbnailComponent />
-      <TableContainer className="table" component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow className="table__row">
-              <TableCell className="table__cell">#</TableCell>
-              <TableCell className="table__cell">Title</TableCell>
-              <TableCell className="table__cell">Topic</TableCell>
-              <TableCell className="table__cell">Released</TableCell>
-              <TableCell className="table__cell">
-                <AccessTimeRoundedIcon />
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {searchResults &&
-              searchResults.results.map((row) => (
-                <TableRow
-                  className="table__row"
-                  key={row.artistName}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell className="table__name" component="th" scope="row">
-                    <IconButton
-                      className="play-bar__button"
-                      aria-label={playingRow ? "play" : "pause"}
-                      onClick={() => handleTogglePlayback(row)}
-                    >
-                      {row.trackId === playingRow ? (
-                        <PauseRounded
-                          sx={{ fontSize: "3rem" }}
-                          htmlColor={mainIconColor}
-                        />
-                      ) : (
-                        <PlayArrowRounded
-                          sx={{ fontSize: "3rem" }}
-                          htmlColor={mainIconColor}
-                        />
-                      )}
-                    </IconButton>
-                  </TableCell>
-                  <TableCell className="table__adjust table__cell">
-                    <img src={row.artworkUrl60} alt={row.artworkUrl60} />
-                    <div className="table__column">
-                      <span>{row.trackName}</span>
-                      <span>{row.artistName}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="table__cell">
-                    {row.collectionName}
-                  </TableCell>
-                  <TableCell className="table__cell table__nowrap">
-                    {moment(row.releaseDate).utc().format("DD-MM-YYYY")}
-                  </TableCell>
-                  <TableCell className="table__cell">
-                    <MillisecondsToMinutesSeconds
-                      milliseconds={row.trackTimeMillis}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+    <TableContainer className="table" component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow className="table__row">
+            <TableCell className="table__cell">#</TableCell>
+            <TableCell className="table__cell">Title</TableCell>
+            <TableCell className="table__cell">Topic</TableCell>
+            <TableCell className="table__cell">Released</TableCell>
+            <TableCell className="table__cell">
+              <AccessTimeRoundedIcon />
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {searchResults &&
+            searchResults.results.map((row) => (
+              <TableRow
+                className="table__row"
+                key={row.artistName}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell className="table__name" component="th" scope="row">
+                  <IconButton
+                    className="play-bar__button"
+                    aria-label={playingRow ? "play" : "pause"}
+                    onClick={() => handleTogglePlayback(row)}
+                  >
+                    {row.trackId === playingRow ? (
+                      <PauseRounded
+                        sx={{ fontSize: "3rem" }}
+                        htmlColor={mainIconColor}
+                      />
+                    ) : (
+                      <PlayArrowRounded
+                        sx={{ fontSize: "3rem" }}
+                        htmlColor={mainIconColor}
+                      />
+                    )}
+                  </IconButton>
+                </TableCell>
+                <TableCell className="table__adjust table__cell">
+                  <img src={row.artworkUrl60} alt={row.artworkUrl60} />
+                  <div className="table__column">
+                    <span>{row.trackName}</span>
+                    <span>{row.artistName}</span>
+                  </div>
+                </TableCell>
+                <TableCell className="table__cell">
+                  {row.collectionName}
+                </TableCell>
+                <TableCell className="table__cell table__nowrap">
+                  {moment(row.releaseDate).utc().format("DD-MM-YYYY")}
+                </TableCell>
+                <TableCell className="table__cell">
+                  <MillisecondsToMinutesSeconds
+                    milliseconds={row.trackTimeMillis}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
