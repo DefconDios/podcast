@@ -1,55 +1,55 @@
-import { useEffect, useState } from "react";
-import "./SearchBar.scss";
-import { getPodcast } from "../../core/services/ItunesSearchAPI/itunes.service";
-import { useAppContext } from "../../AppContext";
-import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
+import { useEffect, useState } from 'react'
+import './SearchBar.scss'
+import { getPodcast } from '../../core/services/ItunesSearchAPI/itunes.service'
+import { useAppContext } from '../../AppContext'
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded'
 
 const SearchBarComponent = () => {
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const { setResults, clearResults, searchResults } = useAppContext();
-  const [previousSearchTerm, setPreviousSearchTerm] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const { setResults, clearResults, searchResults } = useAppContext()
+  const [previousSearchTerm, setPreviousSearchTerm] = useState<string>('')
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (searchTerm.length >= 3 && searchTerm !== previousSearchTerm) {
-        clearResults();
-        fetchData();
+        clearResults()
+        fetchData()
       }
-    }, 3000);
+    }, 3000)
 
     return () => {
-      clearTimeout(timer);
-    };
-  }, [searchTerm, previousSearchTerm]);
+      clearTimeout(timer)
+    }
+  }, [searchTerm, previousSearchTerm])
 
   const fetchData = async () => {
-    const results = await getPodcast(searchTerm);
+    const results = await getPodcast(searchTerm)
     if (results) {
-      setResults(results);
+      setResults(results)
     }
 
-    setPreviousSearchTerm(searchTerm);
-  };
+    setPreviousSearchTerm(searchTerm)
+  }
 
-  const clearDataSearch = ()=> {
-    clearResults();
+  const clearDataSearch = () => {
+    clearResults()
   }
 
   return (
-    <div className="search">
+    <div className='search'>
       {searchResults && (
-        <button className="search__button" onClick={clearDataSearch}>
+        <button className='search__button' onClick={clearDataSearch}>
           <ArrowBackIosRoundedIcon />
         </button>
       )}
       <input
-        type="search"
-        placeholder="podcast"
+        type='search'
+        placeholder='podcast'
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
     </div>
-  );
-};
+  )
+}
 
-export default SearchBarComponent;
+export default SearchBarComponent

@@ -1,39 +1,39 @@
-import { createContext, useContext, ReactNode, useState } from "react";
-import { MItunesData, Result } from "./core/models/itunes-data.model";
+import { createContext, useContext, ReactNode, useState } from 'react'
+import { MItunesData, Result } from './core/models/itunes-data.model'
 
 interface AppContextType {
-  searchResults: MItunesData | null; // Define el tipo de tus resultados
-  setResults: (results: MItunesData | null) => void;
-  clearResults: () => void;
-  selectedSong: Result | null;
-  setSelectedSong: (row: Result | null) => void;
+  searchResults: MItunesData | null // Define el tipo de tus resultados
+  setResults: (results: MItunesData | null) => void
+  clearResults: () => void
+  selectedSong: Result | null
+  setSelectedSong: (row: Result | null) => void
 }
 
-const AppContext = createContext<AppContextType | undefined>(undefined);
+const AppContext = createContext<AppContextType | undefined>(undefined)
 
 export const useAppContext = (): AppContextType => {
-  const context = useContext(AppContext);
+  const context = useContext(AppContext)
   if (context === undefined) {
-    throw new Error("useAppContext must be used within an AppContextProvider");
+    throw new Error('useAppContext must be used within an AppContextProvider')
   }
-  return context;
-};
+  return context
+}
 
 interface AppContextProviderProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
-  const [searchResults, setSearchResults] = useState<MItunesData | null>(null);
-  const [selectedSong, setSelectedSong] = useState<Result | null>(null);
+  const [searchResults, setSearchResults] = useState<MItunesData | null>(null)
+  const [selectedSong, setSelectedSong] = useState<Result | null>(null)
 
   const setResults = (results: MItunesData | null) => {
-    setSearchResults(results);
-  };
+    setSearchResults(results)
+  }
 
   const clearResults = () => {
-    setSearchResults(null);
-  };
+    setSearchResults(null)
+  }
 
   return (
     <AppContext.Provider
@@ -47,5 +47,5 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     >
       {children}
     </AppContext.Provider>
-  );
-};
+  )
+}

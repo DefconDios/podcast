@@ -1,16 +1,16 @@
-import axios, { AxiosResponse } from "axios";
-import { Result, MItunesData } from "../../models/itunes-data.model";
+import axios, { AxiosResponse } from 'axios'
+import { Result, MItunesData } from '../../models/itunes-data.model'
 
 export const getPodcast = async (filter: string) => {
-  const searchTerm = encodeURIComponent(filter);
-  const url = `https://itunes.apple.com/search?term=${searchTerm}&country=ES&media=podcast&limit=25`;
+  const searchTerm = encodeURIComponent(filter)
+  const url = `https://itunes.apple.com/search?term=${searchTerm}&country=ES&media=podcast&limit=25`
 
   try {
     const response: AxiosResponse = await axios.get(
-      `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`
-    );
+      `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
+    )
 
-    const responseData = JSON.parse(response.data.contents);
+    const responseData = JSON.parse(response.data.contents)
 
     if (responseData && responseData.results) {
       // Mapea los resultados a la estructura de las interfaces Root y Result
@@ -48,13 +48,13 @@ export const getPodcast = async (filter: string) => {
             artworkUrl600: result.artworkUrl600,
             genreIds: result.genreIds,
             genres: result.genres,
-          };
+          }
         }),
-      };
+      }
 
-      return mappedData;
+      return mappedData
     }
   } catch (error) {
-    console.error("Error al buscar podcasts:", error);
+    console.error('Error al buscar podcasts:', error)
   }
-};
+}

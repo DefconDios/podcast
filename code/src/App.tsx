@@ -1,16 +1,16 @@
-import "./App.css";
-import SearchView from "./views/search-view/SearchView";
-import { useAppContext } from "./AppContext";
-import DetailView from "./views/detail-view/DetailView";
+import './App.css'
+import SearchView from './views/search-view/SearchView'
+import { useAppContext } from './AppContext'
+import DetailView from './views/detail-view/DetailView'
 
 function App() {
-  const { searchResults } = useAppContext();
+  const { searchResults } = useAppContext()
   return (
-    <div className="App">
+    <div className='App'>
       {searchResults && <DetailView />}
       {!searchResults && <SearchView />}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
