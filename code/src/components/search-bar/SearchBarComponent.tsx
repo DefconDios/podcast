@@ -31,10 +31,14 @@ const SearchBarComponent = () => {
     setPreviousSearchTerm(searchTerm);
   };
 
+  const clearDataSearch = ()=> {
+    clearResults();
+  }
+
   return (
     <div className="search">
       {searchResults && (
-        <button className="search__button">
+        <button className="search__button" onClick={clearDataSearch}>
           <ArrowBackIosRoundedIcon />
         </button>
       )}

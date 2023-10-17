@@ -1,12 +1,14 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import SearchView from './views/search-view/SearchView';
+import "./App.css";
+import SearchView from "./views/search-view/SearchView";
+import { useAppContext } from "./AppContext";
+import DetailView from "./views/detail-view/DetailView";
 
 function App() {
+  const { searchResults } = useAppContext();
   return (
     <div className="App">
-      <SearchView/>
+      {searchResults && <DetailView />}
+      {!searchResults && <SearchView />}
     </div>
   );
 }
